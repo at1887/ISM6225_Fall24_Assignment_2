@@ -62,25 +62,55 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new List<int>(); // Placeholder
-            }
-            catch (Exception)
+                // Initialize a result list to store missing numbers
+                List<int> result = new List<int>();
+                // Use a HashSet to store unique elements from the array
+                HashSet<int> set = new HashSet<int>(nums);
+                // Check for missing numbers by iterating from 1 to the array length
+                for (int i = 1; i <= nums.Length; i++) 
+                {
+                    if (!set.Contains(i))
+                    {
+                        result.Add(i);
+                    }
+                }
+                return result; // Placeholder
+              }
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error: {ex.Message}");
                 throw;
             }
         }
 
+
         // Question 2: Sort Array by Parity
-        public static int[] SortArrayByParity(int[] nums)
+         public static int[] SortArrayByParity(int[] A)
         {
             try
             {
-                // Write your code here
-                return new int[0]; // Placeholder
+                // Two-pointer approach to sort even numbers to the front
+                int left = 0, right = A.Length - 1;
+                // While pointers haven't crossed
+                while (left < right)
+                {
+                    // Swap when left is odd and right is even
+                    if (A[left] % 2 > A[right] % 2)
+                    {
+                        int temp = A[left];
+                        A[left] = A[right];
+                        A[right] = temp;
+                    }
+                     // Increment left if the current number is even
+                    if (A[left] % 2 == 0) left++;
+                    // Decrement right if the current number is odd
+                    if (A[right] % 2 == 1) right--;
+                }
+                return A;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error: {ex.Message}");
                 throw;
             }
         }
@@ -90,11 +120,25 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new int[0]; // Placeholder
+                // Use a dictionary to store the complement and index of each element
+                Dictionary<int, int> map = new Dictionary<int, int>();
+                // Loop through the array to check if complement exists
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    int complement = target - nums[i];
+                    // If complement is found, return the indices
+                    if (map.ContainsKey(complement))
+                    {
+                        return new int[] { map[complement], i };
+                    }
+                    // Otherwise, store the current number and its index
+                    map[nums[i]] = i;
+                }
+                return new int[0]; // No solution
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error: {ex.Message}");
                 throw;
             }
         }
@@ -104,39 +148,70 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                // Sort the array to get the largest and smallest numbers easily
+                Array.Sort(nums);
+                int n = nums.Length;
+                // Maximum product can be from either three largest or two smallest + largest
+                return Math.Max(nums[0] * nums[1] * nums[n - 1], nums[n - 3] * nums[n - 2] * nums[n - 1]);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error: {ex.Message}");
                 throw;
             }
         }
 
         // Question 5: Decimal to Binary Conversion
-        public static string DecimalToBinary(int decimalNumber)
+        public static string DecimalToBinary(int num)
         {
             try
             {
-                // Write your code here
-                return "101010"; // Placeholder
+                // If the number is zero, return "0"
+                if (num == 0) return "0";
+                // Initialize a string to store the binary result
+                string binary = "";
+                // Convert the decimal to binary by dividing by 2
+                while (num > 0)
+                {
+                    binary = (num % 2) + binary;
+                    num /= 2;
+                }
+                return binary;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error: {ex.Message}");
                 throw;
             }
         }
 
+
         // Question 6: Find Minimum in Rotated Sorted Array
-        public static int FindMin(int[] nums)
+         public static int FindMin(int[] nums)
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                // Use binary search to find the minimum element
+                int left = 0, right = nums.Length - 1;
+                while (left < right)
+                {
+                    int mid = left + (right - left) / 2;
+                    // If mid is greater than right, the minimum is to the right
+                    if (nums[mid] > nums[right])
+                    {
+                        left = mid + 1;
+                    }
+                    else
+                    {
+                        right = mid;
+                    }
+                }
+                // Return the minimum element found
+                return nums[left];
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error: {ex.Message}");
                 throw;
             }
         }
@@ -146,25 +221,48 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return false; // Placeholder
+                // Negative numbers are not palindromes
+                if (x < 0) return false;
+                int original = x, reversed = 0;
+                while (x > 0)
+                {
+                    int digit = x % 10;
+                    reversed = reversed * 10 + digit;
+                    x /= 10;
+                }
+                // Check if the original number is equal to the reversed number
+                return original == reversed;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error: {ex.Message}");
                 throw;
             }
         }
 
+
         // Question 8: Fibonacci Number
-        public static int Fibonacci(int n)
+        public static int Fibonacci(int N)
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                // Handle base cases for N=0 and N=1
+                if (N == 0) return 0;
+                if (N == 1) return 1;
+                // Initialize variables for the Fibonacci sequence
+                int a = 0, b = 1, sum = 0;
+                // Loop to calculate the Fibonacci number
+                for (int i = 2; i <= N; i++)
+                {
+                    sum = a + b;
+                    a = b;
+                    b = sum;
+                }
+                return sum;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error: {ex.Message}");
                 throw;
             }
         }
